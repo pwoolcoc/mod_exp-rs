@@ -1,22 +1,31 @@
 extern crate num;
 
-pub fn mod_exp(base: i64, exponent: i64, modulus: i64) -> i64 {
-    assert!((modulus - 1) * (modulus - 1) < std::i64::MAX);
+use std::ops::{Shr};
+use num::traits::{Num, One, Zero, Bounded};
 
-    let mut result = 1;
+#[allow(non_snake_case)]
+pub fn mod_exp<T>(base: T, exponent: T, modulus: T) -> T where T: Num + PartialOrd + Shr<T, Output=T> + Copy + Bounded {
+    let ONE: T = One::one();
+    let TWO: T = ONE + ONE;
+    let ZERO: T = Zero::zero();
+    let MAX: T = Bounded::max_value();
+
+    assert!((modulus - ONE) * (modulus - ONE) < MAX);
+
+    let mut result = ONE;
     let mut base = base % modulus;
     let mut exponent = exponent;
 
     loop {
-        if exponent <= 0 {
+        if exponent <= ZERO {
             break;
         }
 
-        if exponent % 2 == 1 {
+        if exponent % TWO == ONE {
             result = (result * base) % modulus;
         }
 
-        exponent = exponent >> 1;
+        exponent = exponent >> ONE;
         base = (base * base) % modulus;
     }
 
