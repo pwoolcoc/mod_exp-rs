@@ -1,3 +1,5 @@
+extern crate num;
+
 pub fn mod_exp(base: i64, exponent: i64, modulus: i64) -> i64 {
     assert!((modulus - 1) * (modulus - 1) < std::i64::MAX);
 
