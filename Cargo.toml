@@ -5,6 +5,9 @@ authors = ["Paul Woolcock <paul@woolcock.us>"]
 repository = "https://github.com/pwoolcoc/mod_exp-rs"
 homepage = "https://github.com/pwoolcoc/mod_exp-rs"
 license = "MIT"
+description = """
+Crate for doing moduluar exponentiation efficiently
+"""
 
 [dependencies.num]
 version = "*"
