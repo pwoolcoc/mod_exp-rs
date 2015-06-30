@@ -6,7 +6,7 @@ repository = "https://github.com/pwoolcoc/mod_exp-rs"
 homepage = "https://github.com/pwoolcoc/mod_exp-rs"
 license = "MIT"
 description = """
-Crate for doing moduluar exponentiation efficiently
+Crate for doing modular exponentiation efficiently
 """
 
 [dependencies.num]
