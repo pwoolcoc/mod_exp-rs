@@ -10,6 +10,6 @@ Crate for doing modular exponentiation efficiently
 """
 
 [dependencies.num]
-version = "*"
+version = "0.2.0"
 features = []
 default-features = false
