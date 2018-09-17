@@ -40,7 +40,7 @@ pub fn mod_exp<T>(base: T, exponent: T, modulus: T) -> T where T: Num + PartialO
     let ZERO: T = Zero::zero();
     let MAX: T = Bounded::max_value();
 
-    assert!((modulus - ONE) * (modulus - ONE) < MAX);
+    assert!((modulus - ONE)  < (MAX / (modulus - ONE)));
 
     let mut result = ONE;
     let mut base = base % modulus;
@@ -64,6 +64,7 @@ pub fn mod_exp<T>(base: T, exponent: T, modulus: T) -> T where T: Num + PartialO
 
 #[cfg(test)] mod tests {
     use super::mod_exp;
+    use std::panic;
 
     #[test]
     fn test_mod_exp() {
@@ -71,5 +72,19 @@ pub fn mod_exp<T>(base: T, exponent: T, modulus: T) -> T where T: Num + PartialO
         let exponent = 13i64;
         let modulus = 497i64;
         assert_eq!(mod_exp(base, exponent, modulus), 445i64);
+    }
+
+    #[test]
+    fn test_overflow_lhs() {
+        if let Err(ref e) = panic::catch_unwind(|| {
+            let modulus = 254u8;
+            mod_exp(1u8, 1u8, modulus);
+        }) {
+            if let Some(msg) = e.downcast_ref::<&str>() {
+                assert!(msg.starts_with("assertion failed: "));
+                return
+            }
+        }
+        assert!(false, "Assertion didn't fail as it should have");
     }
 }
