@@ -40,7 +40,9 @@ pub fn mod_exp<T>(base: T, exponent: T, modulus: T) -> T where T: Num + PartialO
     let ZERO: T = Zero::zero();
     let MAX: T = Bounded::max_value();
 
-    assert!((modulus - ONE)  < (MAX / (modulus - ONE)));
+    if modulus > ONE {
+        assert!((modulus - ONE)  < (MAX / (modulus - ONE)));
+    }
 
     let mut result = ONE;
     let mut base = base % modulus;
